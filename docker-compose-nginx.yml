@@ -1,0 +1,36 @@
+#
+# maintainer: "Alvaro Barcellos <alvaro.barcellos@cprm.gov.br>"
+#
+
+version: "2.2"
+
+networks:
+    default:
+    internal_hosts:
+        external: true
+
+services:
+    nginx_refer:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: nginx:1.20
+        container_name: nginx4refer
+        restart: unless-stopped
+        stdin_open: true
+        # tty: true
+        networks:
+            - internal_hosts
+        #hostname: refer
+        ports:
+            - 8080:80
+            - 8443:443
+        volumes:
+            - nginx_refer_conf:/etc/nginx
+            - nginx_refer_data:/var/lib/nginx
+volumes:
+    nginx_refer_conf:
+        name: nginx_refer_conf
+    nginx_refer_data:
+        name: nginx_refer_data
+

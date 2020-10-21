@@ -1,0 +1,13 @@
+	server {
+        listen          80;
+        server_name     cprm.gov.br *.cprm.gov.br;
+        return          301 $scheme://apps.cprm.gov.br$request_uri;
+    }
+
+    server {
+        listen          80;
+        server_name     apps.cprm.gov.br;
+        index           index.html index.htm;
+#       root            /home/domain.com;
+    }
+    

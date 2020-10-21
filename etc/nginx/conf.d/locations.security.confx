@@ -1,0 +1,78 @@
+#
+## by agsb@
+# in 17/04/2020 from https://serverfault.com/questions/940842/strange-character-added-at-the-end-of-url
+
+## Enable SEF URLs
+location / {
+try_files $uri $uri/ /index.html?$args;
+}
+
+# Allow access to /
+#location = / {
+#return 301 /index.html?$args;
+#}
+
+## Advanced server protection rules exceptions
+
+location = /robots.txt {
+break;
+}
+location ~* ^/cache/*$ {
+break;
+}
+location ~* ^/mapas/*$ {
+break;
+}
+location ~* ^/images/*$ {
+break;
+}
+
+# Allow midia files selected 
+location ~* \.(html|htm|css|pdf|txt|flv|ico)$ {
+break;
+}
+location ~* \.(jpe|jpg|jpeg|jp2|jpe2|png|gif|bmp|ttf|svg)$ {
+break;
+}
+location ~* \.(swf|mpg|mp3|mpeg|mp4|avi|wav|mov|ogg|ogv)$ {
+break;
+}
+location ~* \.(xls|xlsx|doc|docx|ppt|pptx|xps)$ {
+break;
+}
+location ~* \.(zip|rar|7z|odt|ods|odp|ttf|woff|woff2|eot)$ {
+break;
+}
+
+# If it is a file, directory or symlink and I haven't deliberately
+# enabled access to it, forbid any access to it!
+if (-e $request_filename) {
+    return 403;
+}
+
+## Prevent access to dot files
+
+location = /*/.htaccess.txt {
+log_not_found off;
+access_log off;
+return 404;
+break;
+}
+
+## Prevent access to dot files
+#location ~* ^\..*$ {
+#log_not_found off;
+#access_log off;
+#return 404;
+#break;
+#}
+
+## Disallow front-end access for certain system directories (unless access to their files is allowed above)
+
+location ~* ^/(includes|library|lib|log|tmp)/ {
+return 403;
+}
+
+# In any other case, just treat as a SEF URL
+try_files $uri $uri/ /index.html?$args;
+

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> Links test</title>
+</head>
+
+<body>
+
+    <script href="/md5uuid.js"> </script>
+
+<script>
+
+function Referer() {
+
+//	window.location 
+//
+//    href - the entire URL
+//    protocol - the protocol of the URL
+//    host - the hostname and port of the URL
+//    hostname - the hostname of the URL
+//    port - the port number the server uses for the URL
+//    pathname - the path name of the URL
+//    search - the query portion of the URL
+//    hash - the anchor portion of the URL
+
+document.getElementById("document_url").innerHTML = "<p>The document URL of this page is:<br>" + document.URL;
+document.getElementById("document_uri").innerHTML = "<p>The document URI of this page is:<br>" + document.baseURI;
+document.getElementById("href_root").innerHTML = "<p>The href URL of this page is:<br>" + window.location.href;
+document.getElementById("protocol_root").innerHTML = "<p>The protocol URL of this page is:<br>" + window.location.protocol;
+document.getElementById("host_root").innerHTML = "<p>The host URL of this page is:<br>" + window.location.host;
+document.getElementById("hostname_root").innerHTML = "<p>The hostname URL of this page is:<br>" + window.location.hostname;
+document.getElementById("port_root").innerHTML = "<p>The port URL of this page is:<br>" + window.location.port;
+document.getElementById("pathname_root").innerHTML = "<p>The pathname URL of this page is:<br>" + window.location.pathname;
+document.getElementById("search_root").innerHTML = "<p>The search URL of this page is:<br>" + window.location.search;
+document.getElementById("hash_root").innerHTML = "<p>The hash URL of this page is:<br>" + window.location.hash;
+document.getElementById("uuid_url").innerHTML = "<p>The document uuid of this page is:<br>" + uuidv4();
+document.getElementById("md5sum_url").innerHTML = "<p>The document md5 of this page is:<br>" + md5(document.URL);
+}
+
+
+</script>
+
+  <h2>JavaScript</h2>
+
+ <button onclick="Referer();">Click me</button> 
+
+  <h3>The uuid </h3>
+  
+  <p id="uuid_url"></p>
+  
+  <p id="md5sum_url"></p>
+
+  <h3>The Document.URL </h3>
+
+  <p id="document_url"></p>
+
+  <h3>The Document.baseURI </h3>
+
+  <p id="document_uri"></p>
+
+  <h3>The window.location.href</h3>
+
+<div id="locations"> 
+  <h2> Content  </h2>
+
+  <p id="href_root"></p>
+  <p id="protocol_root"></p>
+  <p id="host_root"></p>
+  <p id="hostname_root"></p>
+  <p id="port_root"></p>
+  <p id="pathname_root"></p>
+  <p id="search_root"></p>
+  <p id="hash_root"></p>
+</div>
+
+
+<div id="navegations">
+
+    <h2> Content navegations</h2>
+
+    <p><a href="/"> / </a>
+    <p><a href="//">// </a>
+    <p><a href="///"> /// </a>
+
+    <p><a href="./" />
+    <p><a href="/./" />
+
+    <p><a href="../" />
+    <p><a href="/../" />
+    
+    <p><a href="/.home.html"> /.home.html </a>
+    <p><a href="/_home.html"> /_home.html </a>
+    <p><a href="/home.html"> /home.html </a>
+
+    <p><a href="/service/home.html"> /service/home.html </a>
+    <p><a href="/service/.home.html"> /service/.home.html </a>
+    <p><a href="/service/_home.html"> /service/_home.html </a>
+    <p><a href="/service/../home.html"> /service/../home.html </a>
+    <p><a href="/service/../service/home.html"> /service/../service/home.html </a>
+
+</div>
+
+</body>
+
+</html>
