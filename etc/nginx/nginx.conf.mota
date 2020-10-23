@@ -1,0 +1,72 @@
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+mail {
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+	# Aplicações com subdomínio próprio
+    # Ex: https://geoservicos.cprm.gov.br
+    include /etc/nginx/sites-enabled/*.conf;
+    
+    # Área para incluir pequenos apps
+    # Ex: https://apps.cprm.gov.br/<app-name>
+    server {
+        sendfile on;
+        listen 80;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+        client_max_body_size 1000M;
+        proxy_read_timeout 600s;
+        server_name apps.cprm.gov.br;
+        charset utf-8;
+        
+        include /etc/nginx/apps.d/*.conf;
+    }
+    
+    # Default
+    server {
+        listen       80 default_server;
+        server_name  _;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        
+        server_name_in_redirect off;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+    }
+}
